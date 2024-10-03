@@ -1,10 +1,12 @@
 
 import React from "react";
+import { Container } from './styles';
 
 export default function Repositorio() {
   return (
-    <div>
+
+    <Container>
       <h1>Pagina Repositorio</h1>
-    </div>
+    </Container>
   )
 }

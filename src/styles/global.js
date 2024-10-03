@@ -36,4 +36,8 @@ export default createGlobalStyle`
     font-size: 16px; /* Ajuste o tamanho da fonte */
     -webkit-text-size-adjust: 100%; /* Impede o ajuste de tamanho do texto no iOS */
   }
+
+  li {
+    list-style: none; !important
+  }
 `;

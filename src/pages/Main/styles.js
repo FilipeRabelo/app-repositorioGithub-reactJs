@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 const pulse = keyframes`
   0% {
@@ -10,7 +10,7 @@ const pulse = keyframes`
 `;
 
 export const Container = styled.div`
-  color: #DC143C;
+  
   max-width: 700px;
   background-color: #FFFFFF;
   border-radius: 6px;
@@ -18,9 +18,10 @@ export const Container = styled.div`
   padding: 30px;
   margin: 80px auto;
   box-shadow: 0 0 30px rgba(138, 43, 226, 1);
-  animation: ${pulse} 1.5s infinite alternate;
+  animation: ${ pulse } 1.5s infinite alternate;
 
   h1{
+  color: #DC143C;
     font-size: 20px;
     display: flex;
     align-items: center;
@@ -58,10 +59,24 @@ export const Form = styled.form`
   }
 `;
 
-export const SubmitButton = styled.button.attrs({
+// animação do button
+
+const animate = keyframes`
+  from {
+    transform: rotate(0deg)
+  }
   
+  to{
+    transform: rotate(360deg)
+  }
+`;
+
+export const SubmitButton = styled.button.attrs(props => ({
+
   type: 'submit',
-})`
+  disabled: props.loading
+
+}))`
   background: #6F42C1;
   border: 0;
   border-radius: 4px;
@@ -75,4 +90,61 @@ export const SubmitButton = styled.button.attrs({
   &:hover{
     background-color: #f5f5f5;
   }
+
+
+  &[disabled]{
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  ${props => props.loading && 
+
+    css`
+      svg{      
+        animation: ${ animate } 2s linear infinite;
+      }
+    `
+  }
+`;
+
+export const List = styled.ul`
+  list-style: nome; !important;
+  margin-top: 20px;
+
+  li{
+    padding: 15px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    marker: none;
+    color: #000
+
+    & + li {
+      margin-top: 1px solid #eee
+    }
+
+    a{
+      color: #0D2636,
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    span{
+      font-weight: bold;
+    }
+  }
+`;
+
+export const DeleteButton = styled.button.attrs({
+
+  type: 'button',
+
+})`
+  background-color: transparent;
+  
+  border: none;
+  padding: 8px 7px;
+  outline: 0;
+  border-radius: 4px;
 `;
