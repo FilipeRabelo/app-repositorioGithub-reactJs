@@ -96,7 +96,7 @@ export default function Main() {
     <Container>
       <h1>
         <FaGithub size={ 25 } />
-        Repositórios Favoritos GitHub
+        Repositórios Favoritos
       </h1>
 
       <Form onSubmit={ handleSubmit }>
