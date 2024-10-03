@@ -1,0 +1,51 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  width: auto;
+  padding: 15px 40px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(111, 66, 193, 0.9);
+	animation: pulse 1s infinite alternate;
+}
+
+.message {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.fechar {
+  background-color: #FF073A;
+  color: #fff;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  transition: all 0.8s;
+
+  &:hover{
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse {
+
+  0% {
+    box-shadow: 0 0 20px rgba(111, 66, 193, 0.5);
+  }
+
+  100% {
+    box-shadow: 0 0 40px rgba(111, 66, 193, 0.9); /* Brilho aumentado */
+  }
+  /* rgba(220, 20, 60, 1) */
+}

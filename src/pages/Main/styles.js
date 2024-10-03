@@ -159,3 +159,4 @@ export const DeleteButton = styled.button.attrs({
     transform: scale(1.2);
   }
 `;
+
