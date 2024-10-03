@@ -14,6 +14,7 @@ export default createGlobalStyle`
 
   body{
     background-color: #0D2636;
+    // background-color: #000;
     font-size: 14px;
     -webkit-font-smoothing: antialiased !important;
   }
