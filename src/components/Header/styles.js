@@ -1,4 +1,15 @@
-import styled from "styled-components";
+
+
+import styled, { keyframes } from "styled-components";
+
+const pulse = keyframes`
+  0% {
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 40px rgba(138, 43, 226, 0.9); /* Brilho aumentado */
+  }
+`;
 
 export const Head = styled.header`
   height: 80px;
@@ -11,6 +22,8 @@ export const Head = styled.header`
   padding: 16px;
   background-color: #6f42c1;
   color: #FFF;
+  box-shadow: 0 0px 30px rgba(138, 43, 226, 1);
+  animation: ${pulse} 1.5s infinite alternate; 
 
 .divLink {
   display: flex;

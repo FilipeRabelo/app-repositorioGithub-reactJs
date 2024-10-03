@@ -1,13 +1,24 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const pulse = keyframes`
+  0% {
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 40px rgba(138, 43, 226, 0.9); /* Brilho aumentado */
+  }
+`;
 
 export const Container = styled.div`
   color: #DC143C;
   max-width: 700px;
   background-color: #FFFFFF;
   border-radius: 6px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  // box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   padding: 30px;
   margin: 80px auto;
+  box-shadow: 0 0 30px rgba(138, 43, 226, 1);
+  animation: ${pulse} 1.5s infinite alternate;
 
   h1{
     font-size: 20px;
@@ -47,7 +58,10 @@ export const Form = styled.form`
   }
 `;
 
-export const SubmitButton = styled.button`
+export const SubmitButton = styled.button.attrs({
+  
+  type: 'submit',
+})`
   background: #6F42C1;
   border: 0;
   border-radius: 4px;
