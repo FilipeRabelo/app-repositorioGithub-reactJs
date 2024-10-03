@@ -3,7 +3,6 @@ import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa';
 import { Container, Form, SubmitButton, List, DeleteButton } from './styles';
 import './styles.css';
 import api from '../../services/api';
-import data from "insomnia-plugin-documents-br/src/gerador/data";
 
 const Modal = ({ isOpen, onClose, message }) => {
   if (!isOpen) return null;
@@ -19,9 +18,31 @@ const Modal = ({ isOpen, onClose, message }) => {
   );
 };
 
+const ModalExcluir = ({ isOpen, onClose, onConfirm, message }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <p className="message">{ message }</p>
+        <div className="modal-buttons">
+          { onConfirm && (
+            <button className="confirm" onClick={ onConfirm }>Sim</button>
+          ) }
+          <button className="cancel" onClick={ onClose }>Não</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 export default function Main() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false); // Novo estado para o modal de confirmação
   const [errorMessage, setErrorMessage] = useState('');
+  const [repoToDelete, setRepoToDelete] = useState(null); // Estado para armazenar o repositório a ser deletado
+
 
   const [newRepo, setNewRepo] = useState('');             // input q capta o q digita
   const [repositorios, setRepositorio] = useState([]);    // [] para armazenar todos os repositórios cadastrados
@@ -55,6 +76,7 @@ export default function Main() {
         if (hasRepo) {                                  // verificando se repo ja existe
           setErrorMessage('Este repositório já está Cadastrado.');
           setIsModalOpen(true);          
+          setNewRepo('');
           throw new Error('Este repositório já está Cadastrado.');     // se tem o repositorio vou barrar
         }
 
@@ -75,6 +97,7 @@ export default function Main() {
       
         if (error.response && error.response.status === 404) {  // Verifica se o erro é de repositório não encontrado
           setErrorMessage('Repositório NÂO existe no GitHub'); 
+          setNewRepo('');
         } 
         setIsModalOpen(true);
 
@@ -98,24 +121,42 @@ export default function Main() {
 
 
 
+  // const handleDelete = useCallback((repo) => {
+  //   const encontrar = repositorios.filter(r => r.name !== repo); // filter - retorna tudo menos o ue foi clicado para deletar
+  //   setRepositorio(encontrar);    
+
+  //   setErrorMessage('Repositório Deletado!');
+  //   setIsModalOpen(true);
+
+  // }, [repositorios]);
+
+
   const handleDelete = useCallback((repo) => {
-    const encontrar = repositorios.filter(r => r.name !== repo); // filter - retorna tudo menos o ue foi clicado para deletar
-    setRepositorio(encontrar);    
+    setRepoToDelete(repo); // Armazena o repositório a ser deletado
+    setErrorMessage('Deseja realmente deletar este repositório?');
+    setIsConfirmModalOpen(true); // Abre o modal de confirmação
+  }, []);
 
-    setErrorMessage('Repositório Deletado!');
-    setIsModalOpen(true);
+  // Função para confirmar a deleção
+  const confirmDelete = useCallback(() => {
+    const encontrar = repositorios.filter(r => r.name !== repoToDelete); // Remove o repositório
+    setRepositorio(encontrar);
+    setIsConfirmModalOpen(false); // Fecha o modal de confirmação
+    setErrorMessage('Repositório Deletado!'); // Mensagem de sucesso
+    setIsModalOpen(true); // Abre o modal de sucesso
+  }, [repositorios, repoToDelete]);
 
-  }, [repositorios]);
-
-
-
+//////////////////////////////////////////
 
   // MODAL DE DIGITAR REPOSITORIO
   const closeModal = () => {
     setIsModalOpen(false);
     setErrorMessage('');
   };
-
+  const closeConfirmModal = () => {
+    setIsConfirmModalOpen(false);
+    setRepoToDelete(null); // Limpa o repositório armazenado
+  };
 
 
 
@@ -164,6 +205,13 @@ export default function Main() {
       </List>
 
       <Modal isOpen={ isModalOpen } onClose={ closeModal } message={ errorMessage } />
+
+      <ModalExcluir
+        isOpen={ isConfirmModalOpen }
+        onClose={ closeConfirmModal }
+        message={ errorMessage }
+        onConfirm={ confirmDelete } // Passa a função de confirmação
+      />
     </Container>
 
   )

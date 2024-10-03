@@ -120,7 +120,8 @@ export const List = styled.ul`
     align-items: center;
     justify-content: space-between;
     marker: none;
-    color: #000
+    color: #000;
+    text-transform: capitalize;
 
     & + li {
       margin-top: 1px solid #eee
