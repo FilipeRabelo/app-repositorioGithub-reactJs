@@ -18,7 +18,8 @@ export const Container = styled.div`
   padding: 30px;
   margin: 80px auto;
   box-shadow: 0 0 30px rgba(138, 43, 226, 1);
-  animation: ${ pulse } 1.5s infinite alternate;
+  animation: ${ pulse } 1s infinite alternate;
+  border: 1px solid rgba(0, 0, 0, 0.2);
 
   h1{
   color: #DC143C;
@@ -128,6 +129,12 @@ export const List = styled.ul`
       color: #0D2636,
       font-weight: bold;
       text-decoration: none;
+      padding-right: 2px;
+      transition: all 0.5s;
+
+      &:hover{
+        transform: scale(1.2);
+      }
     }
 
     span{
@@ -142,9 +149,13 @@ export const DeleteButton = styled.button.attrs({
 
 })`
   background-color: transparent;
-  
   border: none;
-  padding: 8px 7px;
+  padding: 8px 7px; 
   outline: 0;
   border-radius: 4px;
+  transition: all 0.5s;
+
+  &:hover{
+    transform: scale(1.2);
+  }
 `;

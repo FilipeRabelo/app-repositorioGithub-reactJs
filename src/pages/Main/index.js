@@ -87,12 +87,12 @@ export default function Main() {
           <li key={repo.name}>
             <span>
               <DeleteButton onClick={() => handleDelete(repo.name)}>
-                <FaTrash size={ 16 } color="#DC143C"/>
+                <FaTrash size={ 12 } color="#DC143C"/>
               </DeleteButton>
               {repo.name}
             </span>
             <a href="../Repositorio/index.js">
-              <FaBars size={20}/>
+              <FaBars size={ 20 } color="#6F42C1"/>
             </a>
           </li>
         ))}
