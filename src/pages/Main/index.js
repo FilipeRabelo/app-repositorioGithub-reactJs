@@ -3,6 +3,7 @@ import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa';
 import { Container, Form, SubmitButton, List, DeleteButton } from './styles';
 import './styles.css';
 import api from '../../services/api';
+import data from "insomnia-plugin-documents-br/src/gerador/data";
 
 const Modal = ({ isOpen, onClose, message }) => {
   if (!isOpen) return null;
@@ -22,10 +23,11 @@ export default function Main() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const [newRepo, setNewRepo] = useState('');            // input q capta o q digita
-  const [repositorios, setRepositorio] = useState([])    // [] para armazenar todos os repositórios cadastrados
-  const [loading, setLoading] = useState(false)          // estado para animação
+  const [newRepo, setNewRepo] = useState('');             // input q capta o q digita
+  const [repositorios, setRepositorio] = useState([]);    // [] para armazenar todos os repositórios cadastrados
+  const [loading, setLoading] = useState(false);          // estado para animação
 
+  const [alert, setAlert] = useState(null);
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
@@ -33,36 +35,49 @@ export default function Main() {
     async function submit() {          // função responsável por fazer a requisição
 
       setLoading(true);                // habilita o loading
+      setAlert(null);
+
       try {
         
         if (newRepo === '') {                                         // verificando se foi digitado algo
-          setErrorMessage('Você precisa indicar um repositório');     // modal
-          setIsModalOpen(true);    
+          setErrorMessage('Por favor, informe o Repositório Desejado.');     // modal
+          setIsModalOpen(true);   
+          throw new Error('Por favor, informe o Repositório Desejado.');
+        } 
+  
 
-          throw new Error('Você precisa indicar um repositório');
-        }
-       
         const response = await api.get(`repos/${ newRepo }`)  // exemplo : https://api.github.com/repo/facebook/react
 
         const hasRepo = repositorios.find(repo => repo.name === newRepo);
         console.log(hasRepo);
 
+
         if (hasRepo) {                                  // verificando se repo ja existe
-          setErrorMessage('Repositorio Duplicado');
-          setIsModalOpen(true);
-          
-          throw new Error('Repositorio Duplicado');     // se tem o repositorio vou barrar
+          setErrorMessage('Este repositório já está Cadastrado.');
+          setIsModalOpen(true);          
+          throw new Error('Este repositório já está Cadastrado.');     // se tem o repositorio vou barrar
         }
+
 
         const data = {                              // pega o q foi digitado   // desconstrução
           name: response.data.full_name,            // colocando dentro objeto para poder colocar mais depois
         }
 
+
         setRepositorio([...repositorios, data]);    // pega tudo q tem e adiciona o data, novo cadastro
         setNewRepo('');                             // para limpar o input
 
+
       } catch (error) {
+        setAlert(null);
         console.log(error);
+
+      
+        if (error.response && error.response.status === 404) {  // Verifica se o erro é de repositório não encontrado
+          setErrorMessage('Repositório NÂO existe no GitHub'); 
+        } 
+        setIsModalOpen(true);
+
 
       } finally {
         setLoading(false);                          // finaliza o loading
@@ -73,9 +88,15 @@ export default function Main() {
 
   }, [newRepo, repositorios]);         // qndo uma ou a outra state for atualizada ele chama o useCallback
 
+
+
+
   function handleInputChange(e) {
     setNewRepo(e.target.value);
+    setAlert(null);
   }
+
+
 
   const handleDelete = useCallback((repo) => {
     const encontrar = repositorios.filter(r => r.name !== repo); // filter - retorna tudo menos o ue foi clicado para deletar
@@ -84,13 +105,20 @@ export default function Main() {
     setErrorMessage('Repositório Deletado!');
     setIsModalOpen(true);
 
-  }, [repositorios])
+  }, [repositorios]);
+
+
+
 
   // MODAL DE DIGITAR REPOSITORIO
   const closeModal = () => {
     setIsModalOpen(false);
     setErrorMessage('');
   };
+
+
+
+
 
   return (
     <Container>
@@ -99,7 +127,7 @@ export default function Main() {
         Repositórios Favoritos
       </h1>
 
-      <Form onSubmit={ handleSubmit }>
+      <Form onSubmit={ handleSubmit } error={alert}>
         <input
           type="text"
           placeholder="Adicionar Repositórios"

@@ -22,7 +22,7 @@ export const Container = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.2);
 
   h1{
-  color: #DC143C;
+    color: #DC143C;
     font-size: 20px;
     display: flex;
     align-items: center;
@@ -46,7 +46,8 @@ export const Form = styled.form`
 
   input{
     flex: 1;                            // para pegar toda a largura da tela
-    border: 1px solid #ddd;
+    border: 1px solid ${ props => (props.error ? '#FF0000' : '#ddd') };
+    // border: 1px solid #DDD;
     padding: 10px 15px;
     border-radius: 4px;
     color: #000;
@@ -98,7 +99,7 @@ export const SubmitButton = styled.button.attrs(props => ({
     opacity: 0.5;
   }
 
-  ${props => props.loading && 
+  ${ props => props.loading &&
 
     css`
       svg{      
