@@ -12,7 +12,7 @@ const pulse = keyframes`
 `;
 
 export const Head = styled.header`
-  height: 80px;
+  height: 60px;
   width: 100%;
   display: flex;
   flex-direction: row;
