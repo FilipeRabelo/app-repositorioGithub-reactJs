@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa';
 import { Container, Form, SubmitButton, List, DeleteButton } from './styles';
 import './styles.css';
@@ -43,12 +43,30 @@ export default function Main() {
   const [errorMessage, setErrorMessage] = useState('');
   const [repoToDelete, setRepoToDelete] = useState(null); // Estado para armazenar o repositório a ser deletado
 
-
   const [newRepo, setNewRepo] = useState('');             // input q capta o q digita
   const [repositorios, setRepositorio] = useState([]);    // [] para armazenar todos os repositórios cadastrados
   const [loading, setLoading] = useState(false);          // estado para animação
-
   const [alert, setAlert] = useState(null);
+
+
+  // DidMount - buscar
+  useEffect(() => {     // buscar tudo do localStorage e colocar dentro de repositorios
+    const repoStorage = localStorage.getItem('repos') // buscando dentro de repos
+
+    if (repoStorage) { // se tem algo dentro coloco dentro de repositorios
+      setRepositorio(JSON.parse(repoStorage)) // convertendo de volta para array
+    }
+
+  }, [])
+
+
+  // DidUpdate - salvar alterações
+  useEffect(() => {                                               //  buscar tudo q tem e salvar
+    localStorage.setItem('repos', JSON.stringify(repositorios))   // transformar em string
+
+  }, [repositorios])  // qndo a state repositorios sofre alteração ela executa esse useEffect
+
+
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
@@ -59,13 +77,13 @@ export default function Main() {
       setAlert(null);
 
       try {
-        
+
         if (newRepo === '') {                                         // verificando se foi digitado algo
           setErrorMessage('Por favor, informe o Repositório Desejado.');     // modal
-          setIsModalOpen(true);   
+          setIsModalOpen(true);
           throw new Error('Por favor, informe o Repositório Desejado.');
-        } 
-  
+        }
+
 
         const response = await api.get(`repos/${ newRepo }`)  // exemplo : https://api.github.com/repo/facebook/react
 
@@ -75,7 +93,7 @@ export default function Main() {
 
         if (hasRepo) {                                  // verificando se repo ja existe
           setErrorMessage('Este repositório já está Cadastrado.');
-          setIsModalOpen(true);          
+          setIsModalOpen(true);
           setNewRepo('');
           throw new Error('Este repositório já está Cadastrado.');     // se tem o repositorio vou barrar
         }
@@ -94,11 +112,11 @@ export default function Main() {
         setAlert(null);
         console.log(error);
 
-      
+
         if (error.response && error.response.status === 404) {  // Verifica se o erro é de repositório não encontrado
-          setErrorMessage('Repositório NÂO existe no GitHub'); 
+          setErrorMessage('Repositório NÂO existe no GitHub');
           setNewRepo('');
-        } 
+        }
         setIsModalOpen(true);
 
 
@@ -146,7 +164,7 @@ export default function Main() {
     setIsModalOpen(true); // Abre o modal de sucesso
   }, [repositorios, repoToDelete]);
 
-//////////////////////////////////////////
+  //////////////////////////////////////////
 
   // MODAL DE DIGITAR REPOSITORIO
   const closeModal = () => {
@@ -168,7 +186,7 @@ export default function Main() {
         Repositórios Favoritos
       </h1>
 
-      <Form onSubmit={ handleSubmit } error={alert}>
+      <Form onSubmit={ handleSubmit } error={ alert }>
         <input
           type="text"
           placeholder="Adicionar Repositórios"
