@@ -22,14 +22,17 @@ export const Container = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.2);
 
   h1{
+    padding: 0 5px;
     color: #DC143C;
     font-size: 20px;
     display: flex;
     align-items: center;
     flex-direction: row;
+    justify-content: space-between;
 
     svg{
-      margin-right: 10px;
+      align-items: flex-end;
+      justify-content: flex-end;
     }
   }
 

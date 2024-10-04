@@ -42,8 +42,8 @@ export const Head = styled.header`
   font-weight: bold;
   text-decoration: none;
   align-items: center;
-  font-size: 16px;
-  transition: all 0.9s;
+  font-size: 14;
+  transition: all 1s;
 
   &:hover {
     transform: scale(1.2);

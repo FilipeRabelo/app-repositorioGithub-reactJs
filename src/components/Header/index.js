@@ -8,16 +8,21 @@ import { FaGithub } from 'react-icons/fa'
 export default function Header() {
   return (
     <Head>
-      {/* <h2>Repos Favoritos</h2> */}
-      {/* <FaGithub size={ 45 } color='#DC143C' /> */}
+      {/* <h2>Repos Favoritos</h2> */ }
+
+      <div>
+        <Link to={ '/' }>
+          <FaGithub size={ 45 } color='#DC143C' />
+        </Link><br />
+      </div>
 
       <div className='divLink'>
         <Link className="linkTo" to={ '/' }>Home</Link><br />
-        <Link className="linkTo" to={ '/repositorio/:repositorio' }>Repositorio</Link><br />
-        {/* <FaGithub size={ 45 } color='#DC143C'/> */}
+        <Link className="linkTo" to={ '/repositorio/:repositorio' }>Repositorios</Link><br />
+        {/* <FaGithub size={ 45 } color='#DC143C'/> */ }
       </div>
 
-      <FaGithub size={ 45 } color='#DC143C' />
+    
     </Head>
   )
 }
