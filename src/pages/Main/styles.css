@@ -18,8 +18,8 @@
   padding: 15px 16px;
   border-radius: 5px;
   text-align: center;
-  box-shadow: 0 0 40px rgba(111, 66, 193, 0.9);
-	animation: pulse 1s infinite alternate;
+  box-shadow: 0 0 30px rgba(111, 66, 193, 1);
+	/* animation: pulse 1s infinite alternate; */
 }
 
 .message {
