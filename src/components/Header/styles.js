@@ -22,8 +22,8 @@ export const Head = styled.header`
   padding: 16px;
   background-color: #6f42c1;
   color: #FFF;
-  box-shadow: 0 0px 30px rgba(138, 43, 226, 1);
-  animation: ${pulse} 1.5s infinite alternate; 
+  box-shadow: 0 0 15px rgba(138, 43, 226, 1);
+  // animation: ${pulse} 1.5s infinite alternate; 
 
 .divLink {
   display: flex;
