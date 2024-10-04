@@ -115,6 +115,11 @@ export default function Main() {
           setErrorMessage('Repositório NÂO existe no GitHub');
           setNewRepo('');
         }
+
+        if (error.response.status === 403) {  // Verifica se o erro é de repositório não encontrado
+          setErrorMessage('Requisicao negada! Limite Api Atingido!');
+          setNewRepo('');
+        }
         setIsModalOpen(true);
 
 
