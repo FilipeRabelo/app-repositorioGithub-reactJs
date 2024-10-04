@@ -54,10 +54,10 @@ export const Form = styled.form`
     padding: 10px 15px;
     border-radius: 4px;
     color: #000;
-    font-weight: bold;
+    // font-weight: bold;
     transition: all 0.8s;
     touch-action: manipulation;
-    font-size: 14px;
+    font-size: 16px;
 
     &:hover{
       background-color: #f5f5f5;
