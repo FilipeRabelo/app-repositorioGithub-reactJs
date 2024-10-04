@@ -54,6 +54,7 @@ export const Form = styled.form`
     font-weight: bold;
     transition: all 0.8s;
     touch-action: manipulation;
+    font-size: 14px;
 
     &:hover{
       background-color: #f5f5f5;
@@ -112,9 +113,14 @@ export const SubmitButton = styled.button.attrs(props => ({
 export const List = styled.ul`
   list-style: nome; !important;
   margin-top: 20px;
+  
 
   li{
-    padding: 15px 0;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    background-color: #eee;
+    padding: 10px 5px 10px 0;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
