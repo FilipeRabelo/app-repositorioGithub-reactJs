@@ -5,7 +5,7 @@ import { Container } from './styles';
 
 import api from '../../services/api';
 
-export default function Repositorio({ match }) {
+export default function Repositorio() {
 
   const { repositorioUseParams } = useParams();
 
@@ -17,8 +17,6 @@ export default function Repositorio({ match }) {
   useEffect(() => {
 
     async function load() {
-      // const response = await api.get(`/repos/${nomeRepo`});
-      // const issues = await api.get(`/repos/${nomeRepo}/issues`);
 
       // Verificar o limite de requisições
       const rateLimit = await api.get('/rate_limit');
@@ -47,7 +45,7 @@ export default function Repositorio({ match }) {
 
     load();
 
-  }, [match.params.repositorio]);
+  }, [repositorioUseParams]);
 
 
 
@@ -59,4 +57,11 @@ export default function Repositorio({ match }) {
   )
 };
 
-// { repositorio }
+// { repositorioUseParams }
+
+// const response = await api.get(`/repos/${nomeRepo`});
+// const issues = await api.get(`/repos/${nomeRepo}/issues`);
+
+// Verificar o limite de requisições
+// const rateLimit = await api.get('/rate_limit');
+// console.log('Limite de requisições:', rateLimit.data);

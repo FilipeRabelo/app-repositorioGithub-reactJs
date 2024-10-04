@@ -46,8 +46,8 @@ export const Form = styled.form`
 
   input{
     flex: 1;                            // para pegar toda a largura da tela
-    border: 1px solid ${ props => (props.error ? '#FF0000' : '#ddd') };
-    // border: 1px solid #DDD;
+    // border: 1px solid ${ props => (props.error ? '#FF0000' : '#ddd') };
+    border: 1px solid #DDD;
     padding: 10px 15px;
     border-radius: 4px;
     color: #000;

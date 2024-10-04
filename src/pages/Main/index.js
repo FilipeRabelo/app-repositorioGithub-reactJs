@@ -47,7 +47,6 @@ export default function Main() {
   const [newRepo, setNewRepo] = useState('');             // input q capta o q digita
   const [repositorios, setRepositorio] = useState([]);    // [] para armazenar todos os repositórios cadastrados
   const [loading, setLoading] = useState(false);          // estado para animação
-  const [alert, setAlert] = useState(null);
 
 
   // DidMount - buscar
@@ -75,7 +74,6 @@ export default function Main() {
     async function submit() {          // função responsável por fazer a requisição
 
       setLoading(true);                // habilita o loading
-      setAlert(null);
 
       try {
 
@@ -110,7 +108,6 @@ export default function Main() {
 
 
       } catch (error) {
-        setAlert(null);
         console.log(error);
 
 
@@ -127,14 +124,13 @@ export default function Main() {
     }
 
     submit();
-    
+
   }, [newRepo, repositorios]);         // qndo uma ou a outra state for atualizada ele chama o useCallback
 
 
 
   function handleInputChange(e) {
     setNewRepo(e.target.value);
-    setAlert(null);
   }
 
 
@@ -185,7 +181,7 @@ export default function Main() {
         Repositórios Favoritos
       </h1>
 
-      <Form onSubmit={ handleSubmit } error={ alert }>
+      <Form onSubmit={ handleSubmit }>
         <input
           type="text"
           placeholder="Adicionar Repositórios"
