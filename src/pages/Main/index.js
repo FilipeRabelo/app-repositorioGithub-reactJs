@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa';
 import { Container, Form, SubmitButton, List, DeleteButton } from './styles';
-import './styles.css';
+import './styles.css';                                                           // modal styles
+import { Link } from "react-router-dom";
 import api from '../../services/api';
 
 const Modal = ({ isOpen, onClose, message }) => {
@@ -126,9 +127,8 @@ export default function Main() {
     }
 
     submit();
-
+    
   }, [newRepo, repositorios]);         // qndo uma ou a outra state for atualizada ele chama o useCallback
-
 
 
 
@@ -164,13 +164,12 @@ export default function Main() {
     setIsModalOpen(true); // Abre o modal de sucesso
   }, [repositorios, repoToDelete]);
 
-  //////////////////////////////////////////
-
   // MODAL DE DIGITAR REPOSITORIO
   const closeModal = () => {
     setIsModalOpen(false);
     setErrorMessage('');
   };
+
   const closeConfirmModal = () => {
     setIsConfirmModalOpen(false);
     setRepoToDelete(null); // Limpa o repositório armazenado
@@ -209,15 +208,18 @@ export default function Main() {
       <List>
         { repositorios.map(repo => (
           <li key={ repo.name }>
+
             <span>
               <DeleteButton onClick={ () => handleDelete(repo.name) }>
                 <FaTrash size={ 12 } color="#DC143C" />
               </DeleteButton>
               { repo.name }
             </span>
-            <a href="../Repositorio/index.js">
+
+            <Link to={ `/repositorio/${ encodeURIComponent(repo.name)}`}>   
               <FaBars size={ 20 } color="#6F42C1" />
-            </a>
+            </Link>
+
           </li>
         )) }
       </List>
@@ -235,7 +237,7 @@ export default function Main() {
   )
 }
 
-
+//encodeURIComponent(repo.name) para retirar a barra / entre os parâmetros da URL
 
 
 
